@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFrown } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 
+
 function WeatherApp() {
     const [input, setInput] = useState('');
     const [weather, setWeather] = useState({ loading: false, data: {}, error: false });
