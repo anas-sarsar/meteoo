@@ -1,115 +1,24 @@
-/* Styles globaux */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
-}
-
-body {
-  background-color: #e0f7fa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  color: #333;
-  
-}
-
-/* Conteneur principal */
-.App {
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-/* Titre de l'application */
-.app-name {
-  font-size: 24px;
-  font-weight: bold;
-  color: #00796b;
-  margin-bottom: 20px;
-}
-
-/* Barre de recherche */
-.search-bar {
-  margin-bottom: 20px;
-}
-
-.city-search {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #00796b;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-/* Message d'erreur */
-.error-message {
-  color: #d32f2f;
-  font-size: 14px;
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.error-message svg {
-  margin-right: 5px;
-}
-
-/* Chargement (spinner) */
-.loading-spinner {
-  margin: 20px 0;
-}
-
-/* Informations météo */
-.weather-info {
-  margin-top: 20px;
-}
-
-.weather-info h2 {
-  font-size: 20px;
-  color: #00796b;
-}
-
-.weather-info p {
-  font-size: 16px;
-  margin: 5px 0;
-}
-
-.weather-info img {
-  width: 80px;
-  height: 80px;
-}
-
-/* Prévisions météo */
 .forecast {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.forecast-items {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 20px;
 }
 
 .forecast-item {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 10px;
   border-radius: 5px;
-  background-color: #f1f1f1;
+  background-color: #f0f0f0;
 }
 
-/* Styles responsives */
-@media (max-width: 400px) {
-  .App {
-      width: 90%;
-  }
-
-  .app-name {
-      font-size: 20px;
-  }
+.forecast-item img {
+  width: 50px;
+  height: 50px;
 }
