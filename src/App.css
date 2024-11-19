@@ -116,6 +116,7 @@
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Légère ombre */
 }
 
+
 /* Message d'erreur */
 .error-message {
   color: #ff6b6b; /* Rouge vif pour les erreurs */

@@ -113,6 +113,7 @@ function Grp204WeatherApp() {
                 />
             </div>
 
+
             {weather.error && <p className="error-message">Ville introuvable</p>}
 
             {weather.data && weather.data.main && (
