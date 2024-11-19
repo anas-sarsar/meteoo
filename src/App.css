@@ -1,24 +1,145 @@
+/* Prévisions météo */
 .forecast {
   margin-top: 20px;
-  text-align: left;
+  text-align: center;
 }
 
 .forecast-items {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .forecast-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.8); /* Couleur de fond transparente */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Ombre douce */
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.forecast-item:hover {
+  transform: translateY(-5px); /* Animation au survol */
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .forecast-item img {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
+  margin: 10px 0;
+}
+
+.forecast-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Jour */
+.App.day {
+  background: linear-gradient(to bottom, #87ceeb, #ffffff); /* Dégradé moderne */
+  color: #333; /* Texte sombre pour contraste */
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  min-height: 100vh;
+  transition: background 0.5s;
+}
+
+.forecast-item.day {
+  background-color: rgba(255, 255, 255, 0.9); /* Fond plus clair pour le jour */
+}
+
+/* Nuit */
+.App.night {
+  background: linear-gradient(to bottom, #1c1f2a, #2c3e50); /* Dégradé sombre */
+  color: #ddd; /* Texte clair pour contraste */
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  min-height: 100vh;
+  transition: background 0.5s;
+}
+
+.forecast-item.night {
+  background-color: rgba(40, 40, 60, 0.9); /* Fond sombre pour la nuit */
+  color: #ddd;
+}
+
+/* Animation des prévisions */
+.forecast-items {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Barre de recherche */
+.search-bar {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.city-search {
+  padding: 10px 15px;
+  width: 80%;
+  max-width: 400px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  outline: none;
+  transition: box-shadow 0.3s;
+}
+
+.city-search:focus {
+  box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5); /* Effet de focus */
+  border-color: #007bff;
+}
+
+/* Titre de l'application */
+.app-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: inherit;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Légère ombre */
+}
+
+/* Message d'erreur */
+.error-message {
+  color: #ff6b6b; /* Rouge vif pour les erreurs */
+  font-size: 16px;
+  margin: 10px;
+  text-align: center;
+}
+
+/* Météo actuelle */
+.weather-info {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.weather-info h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.weather-info p {
+  font-size: 16px;
+  margin: 5px 0;
 }

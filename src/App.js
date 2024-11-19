@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
-// URL de l'API pour les prévisions météo
+const weatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
 const forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast';
 
 function Grp204WeatherApp() {
     const [input, setInput] = useState('');
     const [weather, setWeather] = useState({ loading: false, data: {}, error: false });
-    const [forecast, setForecast] = useState([]); // État pour stocker les prévisions météo
+    const [forecast, setForecast] = useState([]);
+    const [theme, setTheme] = useState('day'); // État pour le thème (jour/nuit)
 
     const apiKey = 'f00c38e0279b7bc85480c3fe775d518c';
 
@@ -23,27 +24,59 @@ function Grp204WeatherApp() {
                 },
             });
 
-            // Filtrer les prévisions pour obtenir une entrée par jour (12:00 UTC)
             const dailyForecast = response.data.list.filter((item) =>
                 item.dt_txt.includes('12:00:00')
             );
-
             setForecast(dailyForecast);
         } catch (error) {
             console.error('Erreur lors de la récupération des prévisions :', error);
         }
     };
 
-    // Fonction de recherche pour obtenir les données météo actuelles et les prévisions
+    // Fonction pour changer le thème en fonction de l'heure locale
+    const updateTheme = (timezoneOffset) => {
+        const localTime = new Date(new Date().getTime() + timezoneOffset * 1000);
+        const hour = localTime.getUTCHours();
+        setTheme(hour >= 6 && hour < 18 ? 'day' : 'night'); // Jour entre 6h et 18h
+    };
+
+    // Fonction pour détecter la localisation de l'utilisateur
+    const detectLocation = async () => {
+        try {
+            setWeather({ ...weather, loading: true });
+
+            const position = await new Promise((resolve, reject) => {
+                navigator.geolocation.getCurrentPosition(resolve, reject);
+            });
+
+            const { latitude, longitude } = position.coords;
+            const response = await axios.get(weatherUrl, {
+                params: {
+                    lat: latitude,
+                    lon: longitude,
+                    units: 'metric',
+                    appid: apiKey,
+                },
+            });
+
+            setWeather({ data: response.data, loading: false, error: false });
+            updateTheme(response.data.timezone);
+            await getForecast(response.data.name);
+        } catch (error) {
+            console.error('Erreur lors de la détection de la localisation :', error);
+            setWeather({ ...weather, data: {}, error: true });
+        }
+    };
+
+    // Fonction de recherche
     const search = async (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
             setInput('');
             setWeather({ ...weather, loading: true });
 
-            const url = 'https://api.openweathermap.org/data/2.5/weather';
             try {
-                const res = await axios.get(url, {
+                const response = await axios.get(weatherUrl, {
                     params: {
                         q: input,
                         units: 'metric',
@@ -51,8 +84,9 @@ function Grp204WeatherApp() {
                     },
                 });
 
-                setWeather({ data: res.data, loading: false, error: false });
-                await getForecast(input); // Récupérer les prévisions après la recherche
+                setWeather({ data: response.data, loading: false, error: false });
+                updateTheme(response.data.timezone);
+                await getForecast(input);
             } catch (error) {
                 setWeather({ ...weather, data: {}, error: true });
                 setInput('');
@@ -60,8 +94,13 @@ function Grp204WeatherApp() {
         }
     };
 
+    // Détecter automatiquement la localisation à l'ouverture de l'application
+    useEffect(() => {
+        detectLocation();
+    }, []);
+
     return (
-        <div className="App">
+        <div className={`App ${theme}`}>
             <h1 className="app-name">Application Météo grp204</h1>
             <div className="search-bar">
                 <input
